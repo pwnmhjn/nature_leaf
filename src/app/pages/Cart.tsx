@@ -58,7 +58,7 @@ export function Cart() {
                       {item.plant.scientificName}
                     </p>
                     <p className="text-lg font-semibold text-green-600 mt-2">
-                      ${item.plant.price.toFixed(2)}
+                      &#8377;{item.plant.price.toFixed(2)}
                     </p>
                   </div>
 
@@ -93,7 +93,7 @@ export function Cart() {
                     </div>
 
                     <p className="font-semibold text-green-900">
-                      ${(item.plant.price * item.quantity).toFixed(2)}
+                      &#8377;{(item.plant.price * item.quantity).toFixed(2)}
                     </p>
                   </div>
                 </div>
@@ -113,7 +113,7 @@ export function Cart() {
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between text-gray-600">
                   <span>Subtotal</span>
-                  <span>${getCartTotal().toFixed(2)}</span>
+                  <span>&#8377;{getCartTotal().toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-gray-600">
                   <span>Delivery</span>
@@ -122,7 +122,7 @@ export function Cart() {
                 <div className="border-t pt-2 mt-2">
                   <div className="flex justify-between font-semibold text-lg text-green-900">
                     <span>Total</span>
-                    <span>${getCartTotal().toFixed(2)}</span>
+                    <span>&#8377;{getCartTotal().toFixed(2)}</span>
                   </div>
                 </div>
               </div>

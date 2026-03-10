@@ -24,7 +24,7 @@ export function Layout() {
               <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center">
                 <Leaf className="w-6 h-6 text-white" />
               </div>
-              <span className="text-xl font-semibold text-green-900">EcoPlant</span>
+              <span className="text-xl font-semibold text-green-900">NatureLeaf</span>
             </Link>
 
             {/* Navigation */}

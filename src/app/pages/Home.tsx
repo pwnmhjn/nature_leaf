@@ -1,93 +1,116 @@
-import { useState, useMemo } from 'react';
-import { plants, categories, nurseries } from '../data/mockData';
-import { useAppContext } from '../context/AppContext';
-import { Button } from '../components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader } from '../components/ui/card';
-import { Badge } from '../components/ui/badge';
-import { ShoppingCart, Droplets, Sun, SlidersHorizontal, X } from 'lucide-react';
-import { toast } from 'sonner';
-import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import { useState, useMemo } from "react";
+import { plants, categories, nurseries } from "../data/mockData";
+import { useAppContext } from "../context/AppContext";
+import { Button } from "../components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "../components/ui/card";
+import { Badge } from "../components/ui/badge";
+import {
+  ShoppingCart,
+  Droplets,
+  Sun,
+  SlidersHorizontal,
+  X,
+} from "lucide-react";
+import { toast } from "sonner";
+import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../components/ui/select';
-import { Slider } from '../components/ui/slider';
+} from "../components/ui/select";
+import { Slider } from "../components/ui/slider";
 
 export function Home() {
   const { addToCart } = useAppContext();
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [selectedCareLevel, setSelectedCareLevel] = useState('All');
-  const [selectedNursery, setSelectedNursery] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCareLevel, setSelectedCareLevel] = useState("All");
+  const [selectedNursery, setSelectedNursery] = useState("All");
   const [priceRange, setPriceRange] = useState([0, 100]);
-  const [sortBy, setSortBy] = useState('name');
+  const [sortBy, setSortBy] = useState("name");
   const [showFilters, setShowFilters] = useState(false);
 
-  const maxPrice = Math.max(...plants.map(p => p.price));
-  const minPrice = Math.min(...plants.map(p => p.price));
+  const maxPrice = Math.max(...plants.map((p) => p.price));
+  const minPrice = Math.min(...plants.map((p) => p.price));
 
   const filteredAndSortedPlants = useMemo(() => {
     let filtered = plants;
 
     // Category filter
-    if (selectedCategory !== 'All') {
-      filtered = filtered.filter(plant => plant.category === selectedCategory);
+    if (selectedCategory !== "All") {
+      filtered = filtered.filter(
+        (plant) => plant.category === selectedCategory,
+      );
     }
 
     // Care level filter
-    if (selectedCareLevel !== 'All') {
-      filtered = filtered.filter(plant => plant.careLevel === selectedCareLevel);
+    if (selectedCareLevel !== "All") {
+      filtered = filtered.filter(
+        (plant) => plant.careLevel === selectedCareLevel,
+      );
     }
 
     // Nursery filter
-    if (selectedNursery !== 'All') {
-      filtered = filtered.filter(plant => plant.nurseryId === selectedNursery);
+    if (selectedNursery !== "All") {
+      filtered = filtered.filter(
+        (plant) => plant.nurseryId === selectedNursery,
+      );
     }
 
     // Price range filter
-    filtered = filtered.filter(plant => 
-      plant.price >= priceRange[0] && plant.price <= priceRange[1]
+    filtered = filtered.filter(
+      (plant) => plant.price >= priceRange[0] && plant.price <= priceRange[1],
     );
 
     // Sort
     const sorted = [...filtered].sort((a, b) => {
       switch (sortBy) {
-        case 'price-low':
+        case "price-low":
           return a.price - b.price;
-        case 'price-high':
+        case "price-high":
           return b.price - a.price;
-        case 'name':
+        case "name":
         default:
           return a.name.localeCompare(b.name);
       }
     });
 
     return sorted;
-  }, [selectedCategory, selectedCareLevel, selectedNursery, priceRange, sortBy]);
+  }, [
+    selectedCategory,
+    selectedCareLevel,
+    selectedNursery,
+    priceRange,
+    sortBy,
+  ]);
 
-  const handleAddToCart = (plant: typeof plants[0]) => {
+  const handleAddToCart = (plant: (typeof plants)[0]) => {
     addToCart(plant);
     toast.success(`${plant.name} added to cart!`);
   };
 
   const getNurseryName = (nurseryId: string) => {
-    return nurseries.find(n => n.id === nurseryId)?.name || '';
+    return nurseries.find((n) => n.id === nurseryId)?.name || "";
   };
 
   const resetFilters = () => {
-    setSelectedCategory('All');
-    setSelectedCareLevel('All');
-    setSelectedNursery('All');
+    setSelectedCategory("All");
+    setSelectedCareLevel("All");
+    setSelectedNursery("All");
     setPriceRange([0, 100]);
-    setSortBy('name');
+    setSortBy("name");
   };
 
   const activeFiltersCount = [
-    selectedCategory !== 'All',
-    selectedCareLevel !== 'All',
-    selectedNursery !== 'All',
+    selectedCategory !== "All",
+    selectedCareLevel !== "All",
+    selectedNursery !== "All",
     priceRange[0] !== 0 || priceRange[1] !== 100,
   ].filter(Boolean).length;
 
@@ -99,8 +122,9 @@ export function Home() {
           Discover Your Perfect Plant
         </h1>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Browse our curated collection of {plants.length} eco-friendly plants from {nurseries.length} local nurseries. 
-          Sustainable delivery right to your doorstep.
+          Browse our curated collection of {plants.length} eco-friendly plants
+          from {nurseries.length} local nurseries. Sustainable delivery right to
+          your doorstep.
         </p>
       </div>
 
@@ -118,9 +142,14 @@ export function Home() {
               <Badge className="ml-1 bg-green-600">{activeFiltersCount}</Badge>
             )}
           </Button>
-          
+
           {activeFiltersCount > 0 && (
-            <Button variant="ghost" size="sm" onClick={resetFilters} className="text-gray-600">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={resetFilters}
+              className="text-gray-600"
+            >
               <X className="w-4 h-4 mr-1" />
               Clear all
             </Button>
@@ -153,7 +182,10 @@ export function Home() {
                 <label className="text-sm font-semibold text-green-900 mb-2 block">
                   Category
                 </label>
-                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <Select
+                  value={selectedCategory}
+                  onValueChange={setSelectedCategory}
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -172,7 +204,10 @@ export function Home() {
                 <label className="text-sm font-semibold text-green-900 mb-2 block">
                   Care Level
                 </label>
-                <Select value={selectedCareLevel} onValueChange={setSelectedCareLevel}>
+                <Select
+                  value={selectedCareLevel}
+                  onValueChange={setSelectedCareLevel}
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -190,7 +225,10 @@ export function Home() {
                 <label className="text-sm font-semibold text-green-900 mb-2 block">
                   Nursery
                 </label>
-                <Select value={selectedNursery} onValueChange={setSelectedNursery}>
+                <Select
+                  value={selectedNursery}
+                  onValueChange={setSelectedNursery}
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -230,9 +268,13 @@ export function Home() {
           {categories.map((category) => (
             <Button
               key={category}
-              variant={selectedCategory === category ? 'default' : 'outline'}
+              variant={selectedCategory === category ? "default" : "outline"}
               onClick={() => setSelectedCategory(category)}
-              className={selectedCategory === category ? 'bg-green-600 hover:bg-green-700' : ''}
+              className={
+                selectedCategory === category
+                  ? "bg-green-600 hover:bg-green-700"
+                  : ""
+              }
               size="sm"
             >
               {category}
@@ -244,7 +286,10 @@ export function Home() {
       {/* Plants Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {filteredAndSortedPlants.map((plant) => (
-          <Card key={plant.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+          <Card
+            key={plant.id}
+            className="overflow-hidden hover:shadow-lg transition-shadow"
+          >
             <CardHeader className="p-0">
               <div className="relative h-48 overflow-hidden">
                 <ImageWithFallback
@@ -282,10 +327,13 @@ export function Home() {
               </p>
               <div className="flex items-center justify-between">
                 <span className="text-2xl font-bold text-green-900">
-                  ${plant.price.toFixed(2)}
+                  &#8377;{plant.price.toFixed(2)}
                 </span>
                 {plant.inStock && (
-                  <Badge variant="outline" className="text-green-600 border-green-600">
+                  <Badge
+                    variant="outline"
+                    className="text-green-600 border-green-600"
+                  >
                     In Stock
                   </Badge>
                 )}
@@ -307,7 +355,9 @@ export function Home() {
 
       {filteredAndSortedPlants.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-500 mb-4">No plants found with the selected filters.</p>
+          <p className="text-gray-500 mb-4">
+            No plants found with the selected filters.
+          </p>
           <Button onClick={resetFilters} variant="outline">
             Reset Filters
           </Button>
