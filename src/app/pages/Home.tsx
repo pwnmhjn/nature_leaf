@@ -17,7 +17,7 @@ import {
   X,
 } from "lucide-react";
 import { toast } from "sonner";
-import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import { ImageWithFallback } from "../components/fallback/ImageWithFallback";
 import {
   Select,
   SelectContent,

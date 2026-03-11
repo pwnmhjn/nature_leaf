@@ -3,7 +3,7 @@ import { useAppContext } from '../context/AppContext';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
 import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
-import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import { ImageWithFallback } from '../components/fallback/ImageWithFallback';
 
 export function Cart() {
   const { cart, removeFromCart, updateQuantity, getCartTotal } = useAppContext();
